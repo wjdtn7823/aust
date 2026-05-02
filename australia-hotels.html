@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>호주 여행 호텔 비교 🦘</title>
+<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #F7F5F0;
+    --card-bg: #FFFFFF;
+    --text-primary: #1A1A1A;
+    --text-secondary: #6B6B6B;
+    --border: #E8E4DC;
+    --blue: #2563EB;
+    --blue-light: #EFF6FF;
+    --blue-text: #1D4ED8;
+    --green: #059669;
+    --green-light: #ECFDF5;
+    --green-text: #065F46;
+    --amber: #D97706;
+    --amber-light: #FFFBEB;
+    --amber-text: #92400E;
+    --red: #DC2626;
+    --red-light: #FEF2F2;
+    --red-text: #991B1B;
+    --gray-light: #F3F4F6;
+    --gray-text: #374151;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+    --shadow-hover: 0 4px 12px rgba(0,0,0,0.1);
+  }
+
+  body {
+    font-family: 'Pretendard', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+    min-height: 100vh;
+    padding: 2rem 1rem;
+  }
+
+  .container { max-width: 960px; margin: 0 auto; }
+
+  header {
+    text-align: center;
+    margin-bottom: 3rem;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .emoji { font-size: 2.5rem; margin-bottom: 0.75rem; display: block; }
+
+  h1 {
+    font-size: 1.75rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+  }
+
+  .subtitle {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+  }
+
+  .section {
+    margin-bottom: 2.5rem;
+    animation: fadeUp 0.6s ease both;
+  }
+  .section:nth-child(2) { animation-delay: 0.1s; }
+  .section:nth-child(3) { animation-delay: 0.2s; }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .section-title {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .section-count {
+    font-size: 0.75rem;
+    background: var(--gray-light);
+    color: var(--gray-text);
+    padding: 2px 8px;
+    border-radius: 99px;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1rem;
+  }
+
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.25rem;
+    box-shadow: var(--shadow);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: default;
+  }
+
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+  }
+
+  .card.recommended {
+    border: 2px solid var(--blue);
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 99px;
+    margin-bottom: 0.75rem;
+    letter-spacing: 0.02em;
+  }
+
+  .badge-blue { background: var(--blue-light); color: var(--blue-text); }
+  .badge-green { background: var(--green-light); color: var(--green-text); }
+  .badge-gray { background: var(--gray-light); color: var(--gray-text); }
+  .badge-amber { background: var(--amber-light); color: var(--amber-text); }
+
+  .hotel-name {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 3px;
+    line-height: 1.4;
+  }
+
+  .hotel-addr {
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+  }
+
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 0.75rem 0;
+  }
+
+  .info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.8rem;
+    padding: 3px 0;
+  }
+
+  .info-label { color: var(--text-secondary); }
+  .info-val { font-weight: 500; color: var(--text-primary); }
+
+  .star { color: var(--amber); }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 0.75rem;
+  }
+
+  .tag {
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    border-radius: 99px;
+    font-weight: 500;
+  }
+
+  .tag-g { background: var(--green-light); color: var(--green-text); }
+  .tag-r { background: var(--red-light); color: var(--red-text); }
+
+  .verdict {
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--border);
+  }
+
+  footer {
+    text-align: center;
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    animation: fadeUp 0.6s ease 0.3s both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 600px) {
+    h1 { font-size: 1.4rem; }
+    .grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <span class="emoji">🦘</span>
+    <h1>호주 여행 호텔 비교</h1>
+    <p class="subtitle">6/16~6/25 · 시드니 4박 + 브리즈번 5박</p>
+  </header>
+
+  <div class="section">
+    <div class="section-header">
+      <span class="section-title">🏙️ 브리즈번 호텔</span>
+      <span class="section-count">3개 후보</span>
+    </div>
+    <div class="grid">
+
+      <div class="card recommended">
+        <div class="badge badge-blue">✓ 추천</div>
+        <p class="hotel-name">메리튼 스위트 허쉘 스트리트</p>
+        <p class="hotel-addr">43 Herschel St, Brisbane City</p>
+        <hr class="divider">
+        <div class="info-row"><span class="info-label">평점</span><span class="info-val star">★ 4.4</span></div>
+        <div class="info-row"><span class="info-label">리뷰 수</span><span class="info-val">2,479개</span></div>
+        <div class="info-row"><span class="info-label">형태</span><span class="info-val">아파트 스위트</span></div>
+        <div class="info-row"><span class="info-label">위치</span><span class="info-val">CBD·강변 근접</span></div>
+        <div class="tags">
+          <span class="tag tag-g">넓은 공간</span>
+          <span class="tag tag-g">강뷰 가능 (68층)</span>
+          <span class="tag tag-g">주방 완비</span>
+          <span class="tag tag-g">5박 장기숙박 최적</span>
+        </div>
+        <p class="verdict">5박 장기 체류에 아파트형이라 짐 풀고 편하게 지내기 최고. 강뷰 룸은 68층까지 있어 전망 압도적.</p>
+      </div>
+
+      <div class="card">
+        <div class="badge badge-green">차선</div>
+        <p class="hotel-name">호텔 인디고 브리즈번 시티 센터</p>
+        <p class="hotel-addr">27/35 Turbot St, Brisbane City</p>
+        <hr class="divider">
+        <div class="info-row"><span class="info-label">평점</span><span class="info-val star">★ 4.4</span></div>
+        <div class="info-row"><span class="info-label">리뷰 수</span><span class="info-val">441개</span></div>
+        <div class="info-row"><span class="info-label">형태</span><span class="info-val">부티크 호텔</span></div>
+        <div class="info-row"><span class="info-label">위치</span><span class="info-val">CBD 중심</span></div>
+        <div class="tags">
+          <span class="tag tag-g">감각적 인테리어</span>
+          <span class="tag tag-g">친절한 직원</span>
+          <span class="tag tag-r">객실 좁음</span>
+          <span class="tag tag-r">리뷰 수 적음</span>
+        </div>
+        <p class="verdict">감성·디자인 위주라면 좋지만 5박 장기 체류엔 공간이 좁아 불편할 수 있음.</p>
+      </div>
+
+      <div class="card">
+        <div class="badge badge-gray">보통</div>
+        <p class="hotel-name">카프리 바이 프레이저</p>
+        <p class="hotel-addr">80 Albert St, Brisbane City</p>
+        <hr class="divider">
+        <div class="info-row"><span class="info-label">평점</span><span class="info-val star">★ 4.3</span></div>
+        <div class="info-row"><span class="info-label">리뷰 수</span><span class="info-val">1,549개</span></div>
+        <div class="info-row"><span class="info-label">형태</span><span class="info-val">서비스 아파트</span></div>
+        <div class="info-row"><span class="info-label">위치</span><span class="info-val">CBD 중심</span></div>
+        <div class="tags">
+          <span class="tag tag-g">주방·세탁기</span>
+          <span class="tag tag-g">넓은 객실</span>
+          <span class="tag tag-r">청소 불만 후기 반복</span>
+        </div>
+        <p class="verdict">공간은 넉넉하지만 청소 상태 불만 후기가 반복적으로 등장. 메리튼보다 한 단계 아래.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <span class="section-title">🌉 시드니 호텔</span>
+      <span class="section-count">6개 후보</span>
+    </div>
+    <div class="grid">
+
+      <div class="card recommended">
+        <div class="badge badge-blue">✓ 추천</div>
+        <p class="hotel-name">예스 호텔 시드니 QVB</p>
+        <p class="hotel-addr">143 York St, Sydney CBD</p>
+        <hr class="divider">
+        <div class="info-row"><span class="info-label">평점</span><span class="info-val star">★ 4.7</span></div>
+        <div class="info-row"><span class="info-label">리뷰 수</span><span class="info-val">1,840개</span></div>
+        <div class="info-row"><span class="info-label">위치</span><span class="info-val">QVB·달링하버 도보</span></div>
+        <div class="tags">
+          <span class="tag tag-g">후보 중 평점 최고</span>
+          <span class="tag tag-g">얼리체크인 배려</span>
+          <span class="tag tag-g">오페라하우스 20분</span>
+        </div>
+        <p class="verdict">6개 후보 중 평점 최고(4.7). 새벽 도착 첫날 얼리체크인 배려 후기 다수. 여행 동선에 완벽.</p>
+      </div>
+
+      <div class="card">
+        <div class="badge badge-green">차선</div>
+        <p class="hotel-name">송 호텔 시드니</p>
+        <p class="hotel-addr">5/11 Wentworth Ave, Sydney</p>
+        <hr class="divider">
+        <div class="info-row"><span class="info-label">평점</span><span class="info-val star">★ 4.2</span></div>
+        <div class="info-row"><span class="info-label">리뷰 수</span><span class="info-val">3,653개</span></div>
+        <div class="info-row"><span class="info-label">위치</span><span class="info-val">하이드파크 근처</span></div>
+        <div class="tags">
+          <span class="tag tag-g">조식 포함</span>
+          <span class="tag tag-g">리뷰 가장 많음</span>
+          <span class="tag tag-g">가성비</span>
+          <span class="tag tag-r">객실 좁음</span>
+        </div>
+        <p class="verdict">조식 포함에 리뷰 수 최다로 신뢰도 높음. 예산 절약하고 싶다면 좋은 선택.</p>
+      </div>
+
+      <div class="card">
+        <div class="badge badge-gray">보통</div>
+        <p class="hotel-name">더 캐피톨 호텔 시드니</p>
+        <p class="hotel-addr">730 George St, Haymarket</p>
+        <hr class="divider">
+        <div class="info-row"><span class="info-label">평점</span><span class="info-val star">★ 4.3</span></div>
+        <div class="info-row"><span class="info-label">리뷰 수</span><span class="info-val">239개</span></div>
+        <div class="info-row"><span class="info-label">위치</span><span class="info-val">헤이마켓·차이나타운</span></div>
+        <div class="tags">
+          <span class="tag tag-g">친절한 직원</span>
+          <span class="tag tag-r">리뷰 수 매우 적음</span>
+          <span class="tag tag-r">엘리베이터 고장 후기</span>
+        </div>
+        <p class="verdict">리뷰 수 239개로 너무 적어 신뢰도 낮음. 판단하기 이른 호텔.</p>
+      </div>
+
+      <div class="card">
+        <div class="badge badge-gray">보통</div>
+        <p class="hotel-name">더 울티모</p>
+        <p class="hotel-addr">4/37 Ultimo Rd, Haymarket</p>
+        <hr class="divider">
+        <div class="info-row"><span class="info-label">평점</span><span class="info-val star">★ 4.2</span></div>
+        <div class="info-row"><span class="info-label">리뷰 수</span><span class="info-val">986개</span></div>
+        <div class="info-row"><span class="info-label">위치</span><span class="info-val">센트럴역 근처</span></div>
+        <div class="tags">
+          <span class="tag tag-g">가성비</span>
+          <span class="tag tag-g">24시간 체크인</span>
+          <span class="tag tag-r">객실 매우 좁음</span>
+          <span class="tag tag-r">방음 약함</span>
+        </div>
+        <p class="verdict">가격 대비 나쁘지 않지만 2인 4박엔 공간이 너무 좁을 수 있음.</p>
+      </div>
+
+      <div class="card">
+        <div class="badge badge-amber">비추천</div>
+        <p class="hotel-name">이비스 시드니 월드스퀘어</p>
+        <p class="hotel-addr">382 Pitt St, Sydney CBD</p>
+        <hr class="divider">
+        <div class="info-row"><span class="info-label">평점</span><span class="info-val star">★ 3.7</span></div>
+        <div class="info-row"><span class="info-label">리뷰 수</span><span class="info-val">1,524개</span></div>
+        <div class="info-row"><span class="info-label">위치</span><span class="info-val">CBD</span></div>
+        <div class="tags">
+          <span class="tag tag-g">위치</span>
+          <span class="tag tag-r">평점 최저 3.7</span>
+          <span class="tag tag-r">방음 불량</span>
+          <span class="tag tag-r">나이트클럽 소음</span>
+        </div>
+        <p class="verdict">후보 중 유일한 3점대. 옆 나이트클럽 소음 후기 다수. 비추천.</p>
+      </div>
+
+      <div class="card">
+        <div class="badge badge-amber">비추천</div>
+        <p class="hotel-name">하이드 파크 인</p>
+        <p class="hotel-addr">271 Elizabeth St, Sydney</p>
+        <hr class="divider">
+        <div class="info-row"><span class="info-label">평점</span><span class="info-val star">★ 4.1</span></div>
+        <div class="info-row"><span class="info-label">리뷰 수</span><span class="info-val">1,041개</span></div>
+        <div class="info-row"><span class="info-label">위치</span><span class="info-val">하이드파크 인근</span></div>
+        <div class="tags">
+          <span class="tag tag-g">주차 포함</span>
+          <span class="tag tag-r">바퀴벌레 후기</span>
+          <span class="tag tag-r">조식 품질 낮음</span>
+        </div>
+        <p class="verdict">주차 포함이 장점이나 바퀴벌레 후기 있어 위생 우려. 여유 여행 스타일과 맞지 않음.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <footer>
+    🦘 호주 여행 6/15~6/25 &nbsp;·&nbsp; 시드니 → 브리즈번
+  </footer>
+
+</div>
+</body>
+</html>
